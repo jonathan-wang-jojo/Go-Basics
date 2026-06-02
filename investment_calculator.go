@@ -1,11 +1,39 @@
-// entry point of the app
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
-// run `go run app.go` in terminal to execute the program
-// 'go mod init' to create modules
-// use 'go build' to create an exec file
+const inflationRate = 2.5
+
+// go run .
 func main() {
-	fmt.Print("Hello, World!")
+	var investmentAmount float64
+	expectedReturnRate := 5.5
+	var years float64
+
+	fmt.Print("Investment Amount: ")
+	fmt.Scan(&investmentAmount)
+
+	fmt.Print("Expected Return Rate: ")
+	fmt.Scan(&expectedReturnRate)
+
+	fmt.Print("Years: ")
+	fmt.Scan(&years)
+
+	futureValue := investmentAmount * math.Pow(1+expectedReturnRate/100, years)
+	futureRealValue := futureValue / math.Pow(1+inflationRate/100, years)
+
+	// fmt.Println("Future Value:", futureValue)
+
+	// fmt.Printf("Future Value: %.2f\n", futureValue)
+	// fmt.Printf("Future Value (adjusted for inflation): %.2f\n", futureRealValue)
+	// fmt.Printf('Future Value: %.2f
+	// Future Value (adjusted for inflation): %.2f', futureValue, futureRealValue)
+
+	formattedFV := fmt.Sprintf("Future Value: %.2f\n", futureValue)
+	formattedRFV := fmt.Sprintf("Future Value (adjusted for inflation): %.2f\n", futureRealValue)
+
+	fmt.Print(formattedFV, formattedRFV)
 }
