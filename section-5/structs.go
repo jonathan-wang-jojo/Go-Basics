@@ -2,44 +2,36 @@ package main
 
 import (
 	"fmt"
-	"time"
-)
 
-type User struct {
-	firstName string
-	lastName  string
-	birthdate string
-	createdAt time.Time
-}
+	"example.com/structs/user"
+)
 
 func main() {
 	userFirstName := getUserData("Please enter your first name: ")
 	userLastName := getUserData("Please enter your last name: ")
 	userBirthdate := getUserData("Please enter your birthdate (MM/DD/YYYY): ")
 
-	var appUser User
+	var appUser *user.User
 
-	appUser = User{
-		userFirstName,
-		userLastName,
-		userBirthdate,
-		time.Now(),
+	appUser, err := user.New(userFirstName, userLastName, userBirthdate)
+
+	if err != nil {
+		fmt.Println(err)
+		return
 	}
+
+	admin := user.NewAdmin("test@example.com", "test123")
+	admin.OutputUserDetails()
 
 	// ... do something awesome with that gathered data!
 
-	outputUserDetails(&appUser)
-
-}
-
-func outputUserDetails(u *User) {
-	// ...
-	fmt.Println(u.firstName, u.lastName, u.birthdate)
+	appUser.OutputUserDetails()
+	appUser.ClearUserName()
 }
 
 func getUserData(promptText string) string {
 	fmt.Print(promptText)
 	var value string
-	fmt.Scan(&value)
+	fmt.Scanln(&value)
 	return value
 }
